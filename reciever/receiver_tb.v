@@ -1,0 +1,47 @@
+`timescale 1ns/10ps
+module receiver_tb;
+parameter DELY=50;
+reg clk,rst;
+
+wire syn_set;
+wire [7:0]syn_time;
+wire load_ready;
+wire data_to_slave;
+
+wire rx_state;
+wire  [3:0] baud_cnt;
+wire  [3:0] rx_num;
+wire  [1:0]start_detect;
+wire  [7:0]syn_time_buf;
+wire  receive_ready ;
+wire [7:0] time_second;
+
+
+
+
+
+initial clk=0;
+always #(DELY) clk=~clk;
+initial
+ begin
+   rst=0;
+  #(DELY*300000) $stop;
+ end
+
+receiver    rec_inst(
+   .clk_10M(clk),
+   .rst(rst),
+   .syn_set(syn_set),
+   .syn_time(syn_time),
+   .load_ready(load_ready),
+   .data_to_slave(data_to_slave),
+   .rx_state(rx_state),
+   .baud_cnt(baud_cnt),
+   .rx_num(rx_num),
+   .start_detect(start_detect),
+   .syn_time_buf(syn_time_buf),
+   .receive_ready(receive_ready),
+   .time_second(time_second));
+
+endmodule
+
